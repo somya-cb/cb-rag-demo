@@ -1,0 +1,74 @@
+{
+    "type": "fulltext-index",
+    "name": "vector_idx",
+    "sourceType": "gocbcore",
+    "sourceName": "rag_demo",
+    "planParams": {
+      "maxPartitionsPerPIndex": 8,
+      "indexPartitions": 16
+    },
+    "params": {
+      "doc_config": {
+        "docid_prefix_delim": "",
+        "docid_regexp": "",
+        "mode": "scope.collection.type_field",
+        "type_field": "type"
+      },
+      "mapping": {
+        "default_analyzer": "standard",
+        "default_datetime_parser": "dateTimeOptional",
+        "default_field": "_all",
+        "default_mapping": {
+          "dynamic": true,
+          "enabled": false
+        },
+        "default_type": "_default",
+        "docvalues_dynamic": false,
+        "index_dynamic": true,
+        "store_dynamic": false,
+        "type_field": "_type",
+        "types": {
+          "pdf_app.documents": {
+            "dynamic": false,
+            "enabled": true,
+            "properties": {
+              "embedding": {
+                "enabled": true,
+                "dynamic": false,
+                "fields": [
+                  {
+                    "name": "embedding",
+                    "type": "vector",
+                    "dims": 768,
+                    "similarity": "dot_product",
+                    "index": true
+                  }
+                ]
+              },
+              "text": {
+                "enabled": true,
+                "dynamic": false,
+                "fields": [
+                  {
+                    "name": "text",
+                    "type": "text",
+                    "index": true,
+                    "store": true
+                  }
+                ]
+              },
+              "metadata": {
+                "enabled": true,
+                "dynamic": true
+              }
+            }
+          }
+        }
+      },
+      "store": {
+        "indexType": "scorch",
+        "segmentVersion": 16
+      }
+    },
+    "sourceParams": {}
+  }
